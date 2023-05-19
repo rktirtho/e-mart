@@ -7,11 +7,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class OrderService {
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     void placeOrder() {
         List<String> values = List.of("");
-        webClient.get()
+        webClientBuilder.build().get()
                 .uri("",
                         urlBuilder ->  urlBuilder
                                     .queryParam("skuCode", values)
