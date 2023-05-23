@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "api/va/inventory")
+@RequestMapping(value = "api/v1/inventory")
 @Slf4j
 public class InventoryController {
     private final InventoryService inventoryService;

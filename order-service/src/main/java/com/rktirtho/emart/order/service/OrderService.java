@@ -36,18 +36,8 @@ public class OrderService {
         List<String> orderSkuCode = orderRequest.getOrderLineItemsDtoList().stream()
                         .map(OrderLineItemsDto::getSkuCode).toList();
 
-        boolean bol = webClientBuilder.build().get()
-                .uri("http://INVENTORY-SERVICE/api/va/inventory/test",
-                        urlBuilder -> urlBuilder
-                                .queryParam("skuCodes", orderSkuCode)
-                                .build()
-                )
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block();
-
         InventoryResponse[] result = webClientBuilder.build().get()
-                .uri("http://INVENTORY-SERVICE/api/va/inventory/isInStock",
+                .uri("http://INVENTORY-SERVICE/api/v1/inventory/isInStock",
                         urlBuilder -> urlBuilder
                                 .queryParam("skuCodes", orderSkuCode)
                                 .build()

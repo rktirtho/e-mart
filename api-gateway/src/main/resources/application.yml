@@ -15,12 +15,17 @@ spring:
         - id: inventory-service
           uri: lb://INVENTORY-SERVICE
           predicates:
-            - Path=/inventory-service/**
+            - Path=/api/v1/inventory/**   # if any path start with api/products then it will be redirected to the inventory service
 
         - id: order-service
-          uri: lb:\\ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
           predicates:
             - Path=/api/order
+
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products
 
         - id: discovery-server
           uri: http://localhost:8761
