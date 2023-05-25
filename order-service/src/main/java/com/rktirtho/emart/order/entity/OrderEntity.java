@@ -5,12 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
@@ -18,6 +21,8 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
+@DynamicUpdate
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderEntity {
@@ -26,5 +31,6 @@ public class OrderEntity {
     private Long id;
     private String orderNumber;
     @OneToMany( cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private List<OrderItemsEntity> items;
 }

@@ -15,17 +15,28 @@ spring:
         - id: inventory-service
           uri: lb://INVENTORY-SERVICE
           predicates:
-            - Path=/api/v1/inventory/**   # if any path start with api/products then it will be redirected to the inventory service
+            - Path=/api/v1/inventory/**   # if any path start with api/products then it will be redirected to the inventory service with the given url (lb://INVENTORY-SERVICE//api/v1/inventory/**)
+#           - Before=2017-01-20T17:42:47.789-07:00[America/Denver]  after, between also present. Service will be available with this given time
+#            - Cookie=chocolate, ch.p
+#            - Header=X-Request-Id, \d+
+#            - Host=**.somehost.org,**.anotherhost.org
+#            - Method=GET,POST
+#            - Query=green
+#            - RemoteAddr=192.168.1.1/24 his route matches if the remote address of the request was, for example, 192.168.1.10.
+          filters:
+            - AddRequestHeader=X-Request-red, blue
+
 
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
-            - Path=/api/order
+            - Path=/api/v1/order/
+            - Path=/api/v1/order/**
 
         - id: product-service
           uri: lb://PRODUCT-SERVICE
           predicates:
-            - Path=/api/products
+            - Path=/api/products/**
 
         - id: discovery-server
           uri: http://localhost:8761
