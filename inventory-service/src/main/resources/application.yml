@@ -3,9 +3,9 @@ spring:
   application:
     name: inventory-service
   datasource:
-    url: jdbc:mysql://localhost:3307/inventory
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3307/inventory_service
+    username: root_user
+    password: root_user
   jpa:
     properties:
       hibernate:

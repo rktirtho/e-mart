@@ -25,7 +25,7 @@ import java.util.List;
 @DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderEntity {
+public class OrderEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,3 +34,4 @@ public class OrderEntity {
     @JoinColumn(name = "order_id")
     private List<OrderItemsEntity> items;
 }
+//@EnableJpaAuditing

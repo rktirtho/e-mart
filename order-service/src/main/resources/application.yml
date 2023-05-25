@@ -2,9 +2,9 @@ spring:
   application:
     name: order-service
   datasource:
-    url: jdbc:mysql://localhost:3307/order_service
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3308/order_service
+    username: root_user
+    password: root_user
   jpa:
     properties:
       hibernate:
