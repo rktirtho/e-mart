@@ -1,4 +1,15 @@
-"# e-mart" 
+# E mart 
+
+## Services and ports
+
+| SL  |  Service Name   | Port Number |URL|
+|:---:|:---------------:|:-----------:|:---:|
+|  1  | Gateway Service |  9080       |
+|  2  | Discovery Service| 8761|
+|  3  | Inventory service| 8081|
+|  4  | Order service | 8082|
+|  5  | Product Service| 8083|
+
 
 
 ## Run application

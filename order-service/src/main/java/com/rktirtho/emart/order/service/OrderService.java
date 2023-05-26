@@ -22,7 +22,7 @@ public class OrderService {
     private final WebClient.Builder webClientBuilder;
     private final OrderRepository orderRepository;
 
-    public void placeOrder(OrderRequest orderRequest) {
+    public String placeOrder(OrderRequest orderRequest) {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderNumber(UUID.randomUUID().toString());
 
@@ -46,11 +46,13 @@ public class OrderService {
                 .bodyToMono(InventoryResponse[].class)
                 .block();
 
-        boolean isInStock = Arrays.stream(result).allMatch(InventoryResponse::isInStock);
+        boolean isInStock = Arrays.stream(result)
+                .allMatch(InventoryResponse::isInStock);
         if (isInStock){
-            orderRepository.save(orderEntity);
-        }else log.info("Product is not in stock");
-
+            return orderRepository.save(orderEntity).getOrderNumber().split("-")[4];
+        }else {
+            throw new IllegalStateException("Product is not available");
+        }
     }
 
     private OrderItemsEntity mapToDto(OrderLineItemsDto order) {
@@ -59,5 +61,9 @@ public class OrderService {
         entity.setQuantity(order.getQuantity());
         entity.setSkuCode(order.getSkuCode());
         return entity;
+    }
+
+    public List<OrderEntity> findAll() {
+        return orderRepository.findAll();
     }
 }
