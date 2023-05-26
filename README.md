@@ -4,11 +4,11 @@
 
 | SL  |  Service Name   | Port Number |URL|
 |:---:|:---------------:|:-----------:|:---:|
-|  1  | Gateway Service |  9080       |
-|  2  | Discovery Service| 8761|
-|  3  | Inventory service| 8081|
-|  4  | Order service | 8082|
-|  5  | Product Service| 8083|
+|  1  | Gateway Service |  9080       | http://localhost:8761/ |
+|  2  | Discovery Service| 8761| http://localhost:8761/ |
+|  3  | Inventory service| 8081| http://localhost:8081/ |
+|  4  | Order service | 8082| http://localhost:8082/ |
+|  5  | Product Service| 8083| http://localhost:8083/ |
 
 
 
