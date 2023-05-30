@@ -39,7 +39,7 @@ management:
 resilience4j:
   circuitbreaker:
     instances:
-      inventory:
+      order:
         registerHealthIndicator: true
         event-consumer-buffer-size: 10
         slidingWindowType: count_based
@@ -50,12 +50,12 @@ resilience4j:
         automaticTransitionFromOpenToHalfOpenEnabled: true
   timelimiter:
     instances:
-      inventory:
+      order:
         timeout-duration: 3s
 
   retry:
     instances:
-      inventory:
+      order:
         max-attempts: 10
         wait-duration: 5s
 

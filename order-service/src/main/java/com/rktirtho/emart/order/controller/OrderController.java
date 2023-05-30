@@ -24,9 +24,9 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/place")
-    @CircuitBreaker(name = "inventory", fallbackMethod = "inventoryFallBack")
-    @TimeLimiter(name = "inventory", fallbackMethod = "inventoryFallBackDelay")
-    @Retry(name = "inventory")
+    @CircuitBreaker(name = "order", fallbackMethod = "orderFallBack")
+    @TimeLimiter(name = "order", fallbackMethod = "orderFallBackDelay")
+    @Retry(name = "order")
     public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
         return CompletableFuture.supplyAsync(() -> orderService.placeOrder(orderRequest) );
     }
@@ -37,12 +37,12 @@ public class OrderController {
     }
 
 
-    public CompletableFuture<String> inventoryFallBack(OrderRequest request, RuntimeException e) {
+    public CompletableFuture<String> orderFallBack(OrderRequest request, RuntimeException e) {
         return CompletableFuture.supplyAsync(() -> "Order failed. Try again later");
 
     }
 
-    public CompletableFuture<String> inventoryFallBackDelay(OrderRequest request, RuntimeException e) {
+    public CompletableFuture<String> orderFallBackDelay(OrderRequest request, RuntimeException e) {
         return CompletableFuture.supplyAsync(() -> "Time limit exit...");
 
     }

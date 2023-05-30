@@ -20,7 +20,37 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventory:
+        registerHealthIndicator: true
+        event-consumer-buffer-size: 10
+        slidingWindowType: count_based
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  timelimiter:
+    instances:
+      inventory:
+        timeout-duration: 3s
+  retry:
+    instances:
+      inventory:
+        max-attempts: 10
+        wait-duration: 5s
+
+
+
+
+
+
 # swagger-ui custom path
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+
+
