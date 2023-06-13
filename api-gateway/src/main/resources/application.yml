@@ -48,7 +48,10 @@ spring:
           uri: http://localhost:8761
           predicates:
             - Path=/eureka/**
-
+management:
+  tracing:
+    sampling:
+      probability: 1.0
 
 
 
@@ -61,4 +64,5 @@ logging:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
 

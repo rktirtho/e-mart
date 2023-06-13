@@ -23,12 +23,17 @@ public class OrderController {
 
     private final OrderService orderService;
 
+//    @PostMapping("/place")
+//    @CircuitBreaker(name = "order", fallbackMethod = "orderFallBack")
+//    @TimeLimiter(name = "order", fallbackMethod = "orderFallBackDelay")
+//    @Retry(name = "order")
+//    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
+//        return CompletableFuture.supplyAsync(() -> orderService.placeOrder(orderRequest) );
+//    }
+
     @PostMapping("/place")
-    @CircuitBreaker(name = "order", fallbackMethod = "orderFallBack")
-    @TimeLimiter(name = "order", fallbackMethod = "orderFallBackDelay")
-    @Retry(name = "order")
-    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
-        return CompletableFuture.supplyAsync(() -> orderService.placeOrder(orderRequest) );
+    public String placeOrder(@RequestBody OrderRequest orderRequest) {
+        return orderService.placeOrder(orderRequest);
     }
 
     @GetMapping

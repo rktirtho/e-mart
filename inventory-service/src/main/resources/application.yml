@@ -14,7 +14,6 @@ spring:
       ddl-auto: update
 server:
   port: 8081
-
 eureka:
   client:
     service-url:
@@ -52,5 +51,19 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
 
 

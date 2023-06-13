@@ -21,5 +21,6 @@ Install docker on your local machine.
 <br>
 [Install docker on Linux OS](https://docs.docker.com/desktop/install/linux-install/)
 
+Build and push to docker hub`mvn compile jib:build -Djib.from.auth.username=user -Djib.from.auth.password=pass -Djib.to.auth.username=user -Djib.to.auth.password=pass`
 Go to the project directory by command line and run the `docker-compose` file using `docker-compose up`
 Or if your IDE has docker support then run the docker compose file. Other dependency will be downloaded automatically from the dockerhub

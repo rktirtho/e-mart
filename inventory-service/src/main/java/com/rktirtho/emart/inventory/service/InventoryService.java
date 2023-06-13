@@ -23,12 +23,12 @@ public class InventoryService {
 
     @SneakyThrows
     public List<InventoryResponse> isInStockBySku(List<String> skuCodes){
-        Random r = new Random();
-        int low = 1000;
-        int high = 6000;
-        int result = r.nextInt(high-low) + low;
-        log.info("Waining "+result);
-        Thread.sleep(result);
+//        Random r = new Random();
+//        int low = 1000;
+//        int high = 6000;
+//        int result = r.nextInt(high-low) + low;
+//        log.info("Waining "+result);
+//        Thread.sleep(result);
         log.info("End of delay");
         return inventoryRepository.findBySkuCodeIn(skuCodes)
                 .stream()
