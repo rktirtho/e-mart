@@ -5,9 +5,11 @@ import com.rktirtho.emart.order.dto.OrderLineItemsDto;
 import com.rktirtho.emart.order.dto.OrderRequest;
 import com.rktirtho.emart.order.entity.OrderEntity;
 import com.rktirtho.emart.order.entity.OrderItemsEntity;
+import com.rktirtho.emart.order.event.OrderPlaceEvent;
 import com.rktirtho.emart.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,6 +23,8 @@ import java.util.UUID;
 public class OrderService {
     private final WebClient.Builder webClientBuilder;
     private final OrderRepository orderRepository;
+
+    private final KafkaTemplate<String, OrderPlaceEvent> kafkaTemplate;
 
     public String placeOrder(OrderRequest orderRequest) {
         OrderEntity orderEntity = new OrderEntity();
@@ -49,7 +53,9 @@ public class OrderService {
         boolean isInStock = Arrays.stream(result)
                 .allMatch(InventoryResponse::isInStock);
         if (isInStock){
-            return orderRepository.save(orderEntity).getOrderNumber().split("-")[4];
+            OrderEntity order = orderRepository.save(orderEntity);
+            kafkaTemplate.send("notificationTopic",  new OrderPlaceEvent(order.getOrderNumber()));
+            return order.getOrderNumber().split("-")[4];
         }else {
             throw new IllegalStateException("Product is not available");
         }

@@ -71,6 +71,8 @@ services:
       - "9411:9411"
     networks:
       - e-mart
+
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.2
     container_name: zookeeper
@@ -83,12 +85,14 @@ services:
   broker:
     image: confluentinc/cp-kafka:7.3.2
     container_name: broker
+    networks:
+      - e-mart
     ports:
+      # To learn about configuring Kafka for access across networks see
+      # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
       - "9092:9092"
     depends_on:
       - zookeeper
-    networks:
-      - e-mart
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -98,6 +102,16 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
+  kafka-ui:
+    image: consdata/kouncil:latest
+    container_name: kafka-ui
+    networks:
+      - e-mart
+    environment:
+      - BOOTSTRAP_SERVERS="broker:9092"
+      - kouncil.auth.active-provider="inmemory"
+    ports:
+      - 8089:8080
 
 networks:
   e-mart:
