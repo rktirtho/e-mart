@@ -29,7 +29,23 @@ services:
       MYSQL_PASSWORD: root_user
     networks:
       e-mart:
+  users_db:
+    image: postgres
+    container_name: users_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: 'tutos'
+    networks:
+      - e-mart
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
   product_db:
     image: mongo
@@ -102,16 +118,49 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
-  kafka-ui:
-    image: consdata/kouncil:latest
-    container_name: kafka-ui
-    networks:
-      - e-mart
-    environment:
-      - BOOTSTRAP_SERVERS="broker:9092"
-      - kouncil.auth.active-provider="inmemory"
-    ports:
-      - 8089:8080
+#  kafka-ui:
+#    image: consdata/kouncil:latest
+#    container_name: kafka-ui
+#    networks:
+#      - e-mart
+#    environment:
+#      - BOOTSTRAP_SERVERS="broker:9092"
+#      - kouncil.auth.active-provider="inmemory"
+#    ports:
+#      - 8089:8080
+
+#  prometheus:
+#    image: prom/prometheus:v2.37.1
+#    container_name: prometheus
+#    restart: always
+#    networks:
+#      - e-mart
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+##    depends_on:
+##      - product-service
+##      - inventory-service
+##      - order-service
+##      - notification-service
+#
+#  grafana:
+#    image: grafana/grafana-oss:8.5.2
+#    container_name: grafana
+#    restart: always
+#    networks:
+#      - e-mart
+#    ports:
+#      - "3000:3000"
+#    links:
+#      - prometheus:prometheus
+#    volumes:
+#      - ./grafana:/var/lib/grafana
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=password
 
 networks:
   e-mart:
+
